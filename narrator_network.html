@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #D3D3D3;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "safiyya bint abu ubaid", "label": "safiyya bint abu ubaid", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hafsa", "label": "hafsa", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm atiyya", "label": "umm atiyya", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hafsa bint sirin", "label": "hafsa bint sirin", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "safiyya bint shaiba", "label": "safiyya bint shaiba", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "aisha", "label": "aisha", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm salamah", "label": "umm salamah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm habibah", "label": "umm habibah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "zainab bint abu salamah", "label": "zainab bint abu salamah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "asma", "label": "asma", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "fatima bint almundhir", "label": "fatima bint almundhir", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "aisha bint talha", "label": "aisha bint talha", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "fatima bint abi hubaysh", "label": "fatima bint abi hubaysh", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "habibah bint maisarah", "label": "habibah bint maisarah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm kurz alkabiyyah", "label": "umm kurz alkabiyyah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "alfuraiah bint malik", "label": "alfuraiah bint malik", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "zainab bint kaab", "label": "zainab bint kaab", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "zainab", "label": "zainab", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "judamah bint wahb", "label": "judamah bint wahb", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "zainab bint nasr", "label": "zainab bint nasr", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "jamila bint abbad", "label": "jamila bint abbad", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm qais bint mihsan", "label": "umm qais bint mihsan", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "kabshah bint kaab", "label": "kabshah bint kaab", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hamida bint ubaid", "label": "hamida bint ubaid", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "furaiah bint malik", "label": "furaiah bint malik", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm sulaim", "label": "umm sulaim", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "habibah bint jahsh", "label": "habibah bint jahsh", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "amra bint abdurrahman", "label": "amra bint abdurrahman", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hind bint alharith", "label": "hind bint alharith", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "sahla bint suhail", "label": "sahla bint suhail", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm ruman", "label": "umm ruman", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "safiyya bint harith", "label": "safiyya bint harith", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "fatima bint qais", "label": "fatima bint qais", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "fatima", "label": "fatima", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm haram", "label": "umm haram", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "safiyya", "label": "safiyya", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm kulthum bint abu bakr", "label": "umm kulthum bint abu bakr", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hafsa bint abdurrahman", "label": "hafsa bint abdurrahman", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hind bint utbah", "label": "hind bint utbah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "sister of amra bint abdurrahman", "label": "sister of amra bint abdurrahman", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "alhawala bint tuwait", "label": "alhawala bint tuwait", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm sabiyah al-juhaniyya", "label": "umm sabiyah al-juhaniyya", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "habibah yabba bint sahl", "label": "habibah yabba bint sahl", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm hasan", "label": "umm hasan", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "fatima bint husein", "label": "fatima bint husein", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "hakima bint umaimah", "label": "hakima bint umaimah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umaimah bint ruqaiqah", "label": "umaimah bint ruqaiqah", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm uthman bint abu sufyan", "label": "umm uthman bint abu sufyan", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "ar rabab", "label": "ar rabab", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm fadl", "label": "umm fadl", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "juwayriya", "label": "juwayriya", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "omar bint abdurrahman", "label": "omar bint abdurrahman", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "lubabah bint harith", "label": "lubabah bint harith", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "asma bint umaish", "label": "asma bint umaish", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "bananah bint yazid", "label": "bananah bint yazid", "shape": "dot"}, {"borderWidth": 0, "color": "#97c2fc", "font": {"color": "black"}, "id": "umm hudhayl", "label": "umm hudhayl", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": "safiyya bint abu ubaid", "to": "hafsa", "value": 6}, {"from": "safiyya bint abu ubaid", "to": "safiyya bint abu ubaid", "value": 1}, {"from": "safiyya bint abu ubaid", "to": "umm salamah", "value": 3}, {"from": "safiyya bint abu ubaid", "to": "aisha", "value": 2}, {"from": "hafsa", "to": "umm salamah", "value": 2}, {"from": "hafsa", "to": "aisha", "value": 1}, {"from": "hafsa", "to": "safiyya", "value": 1}, {"from": "hafsa", "to": "umm atiyya", "value": 2}, {"from": "umm atiyya", "to": "hafsa bint sirin", "value": 30}, {"from": "umm atiyya", "to": "umm salamah", "value": 1}, {"from": "umm atiyya", "to": "umm atiyya", "value": 1}, {"from": "umm atiyya", "to": "umm hudhayl", "value": 1}, {"from": "hafsa bint sirin", "to": "umm salamah", "value": 1}, {"from": "hafsa bint sirin", "to": "ar rabab", "value": 1}, {"from": "safiyya bint shaiba", "to": "aisha", "value": 19}, {"from": "safiyya bint shaiba", "to": "asma", "value": 2}, {"from": "safiyya bint shaiba", "to": "umm salamah", "value": 1}, {"from": "safiyya bint shaiba", "to": "safiyya bint shaiba", "value": 1}, {"from": "safiyya bint shaiba", "to": "umm uthman bint abu sufyan", "value": 2}, {"from": "aisha", "to": "aisha bint talha", "value": 22}, {"from": "aisha", "to": "umm salamah", "value": 14}, {"from": "aisha", "to": "fatima bint abi hubaysh", "value": 3}, {"from": "aisha", "to": "zainab bint abu salamah", "value": 1}, {"from": "aisha", "to": "judamah bint wahb", "value": 8}, {"from": "aisha", "to": "zainab bint nasr", "value": 1}, {"from": "aisha", "to": "jamila bint abbad", "value": 1}, {"from": "aisha", "to": "aisha", "value": 39}, {"from": "aisha", "to": "umm habibah", "value": 8}, {"from": "aisha", "to": "umm sulaim", "value": 2}, {"from": "aisha", "to": "habibah bint jahsh", "value": 8}, {"from": "aisha", "to": "amra bint abdurrahman", "value": 44}, {"from": "aisha", "to": "zainab", "value": 4}, {"from": "aisha", "to": "sahla bint suhail", "value": 1}, {"from": "aisha", "to": "umm ruman", "value": 2}, {"from": "aisha", "to": "safiyya bint harith", "value": 3}, {"from": "aisha", "to": "safiyya", "value": 2}, {"from": "aisha", "to": "fatima bint qais", "value": 1}, {"from": "aisha", "to": "umm kulthum bint abu bakr", "value": 4}, {"from": "aisha", "to": "hafsa bint abdurrahman", "value": 2}, {"from": "aisha", "to": "hind bint utbah", "value": 1}, {"from": "aisha", "to": "alhawala bint tuwait", "value": 1}, {"from": "aisha", "to": "umm sabiyah al-juhaniyya", "value": 1}, {"from": "aisha", "to": "umm hasan", "value": 1}, {"from": "aisha", "to": "umm fadl", "value": 3}, {"from": "aisha", "to": "omar bint abdurrahman", "value": 1}, {"from": "aisha", "to": "bananah bint yazid", "value": 1}, {"from": "umm salamah", "to": "umm habibah", "value": 4}, {"from": "umm salamah", "to": "zainab bint abu salamah", "value": 40}, {"from": "umm salamah", "to": "zainab", "value": 6}, {"from": "umm salamah", "to": "hind bint alharith", "value": 8}, {"from": "umm salamah", "to": "fatima bint almundhir", "value": 1}, {"from": "umm salamah", "to": "juwayriya", "value": 1}, {"from": "umm salamah", "to": "umm sulaim", "value": 2}, {"from": "umm salamah", "to": "asma bint umaish", "value": 1}, {"from": "umm habibah", "to": "zainab bint abu salamah", "value": 22}, {"from": "umm habibah", "to": "zainab", "value": 8}, {"from": "umm habibah", "to": "amra bint abdurrahman", "value": 1}, {"from": "zainab bint abu salamah", "to": "zainab", "value": 7}, {"from": "zainab bint abu salamah", "to": "zainab bint abu salamah", "value": 1}, {"from": "zainab bint abu salamah", "to": "umm sulaim", "value": 2}, {"from": "asma", "to": "fatima bint almundhir", "value": 30}, {"from": "asma", "to": "asma", "value": 1}, {"from": "asma", "to": "fatima bint abi hubaysh", "value": 1}, {"from": "asma", "to": "fatima", "value": 1}, {"from": "fatima bint almundhir", "to": "fatima bint almundhir", "value": 1}, {"from": "habibah bint maisarah", "to": "umm kurz alkabiyyah", "value": 2}, {"from": "alfuraiah bint malik", "to": "zainab bint kaab", "value": 2}, {"from": "zainab bint kaab", "to": "furaiah bint malik", "value": 1}, {"from": "zainab bint nasr", "to": "jamila bint abbad", "value": 1}, {"from": "umm qais bint mihsan", "to": "umm qais bint mihsan", "value": 1}, {"from": "umm qais bint mihsan", "to": "lubabah bint harith", "value": 1}, {"from": "kabshah bint kaab", "to": "hamida bint ubaid", "value": 3}, {"from": "umm sulaim", "to": "umm haram", "value": 1}, {"from": "amra bint abdurrahman", "to": "sister of amra bint abdurrahman", "value": 1}, {"from": "amra bint abdurrahman", "to": "habibah yabba bint sahl", "value": 1}, {"from": "fatima bint qais", "to": "fatima", "value": 1}, {"from": "fatima", "to": "fatima bint husein", "value": 1}, {"from": "hakima bint umaimah", "to": "umaimah bint ruqaiqah", "value": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 100
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
